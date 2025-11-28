@@ -1,4 +1,4 @@
-import { FlatList, Pressable, StyleSheet, Text, View, Image, Linking, ScrollView } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View, Image, Linking, ScrollView, Dimensions } from 'react-native';
 import Busca from './components/Busca';
 import { useState, useEffect } from "react";
 import nasaClient from './utils/nasaClient';
@@ -8,6 +8,9 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
+
+  const screenWidth = Dimensions.get('window').width
+  const isMobile = screenWidth < 500
 
   const [photos, setPhotos] = useState([]);
   const [fotosDia, setFotosDia] = useState([]);
@@ -114,7 +117,7 @@ export default function App() {
         <FlatList
           data={photos}
           keyExtractor={(item) => item.data[0].nasa_id}
-          numColumns={2}
+          numColumns={isMobile ? 1 : 2}
           scrollEnabled={false}
           contentContainerStyle={{ paddingVertical: 10 }}
           renderItem={({ item }) => {
@@ -178,7 +181,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffffff',
     alignItems: 'center',
-    paddingBottom: 20,
+    paddingBottom: 20
   },
   apodContainer: {
     width: '80%',
@@ -188,7 +191,7 @@ const styles = StyleSheet.create({
     borderColor: '#DDD',
     borderWidth: 1,
     borderRadius: 4,
-    padding: 12,
+    padding: 12
   },
   apodTitle: {
     fontSize: 18,
@@ -208,45 +211,45 @@ const styles = StyleSheet.create({
   },
   apodListContainer: {
     width: '80%',
-    marginBottom: 10,
+    marginBottom: 10
   },
   apodThumb: {
     alignItems: 'center',
-    marginRight: 8,
+    marginRight: 8
   },
   apodThumbImage: {
     width: 80,
     height: 80,
     borderRadius: 4,
-    marginBottom: 4,
+    marginBottom: 4
   },
   apodThumbText: {
-    fontSize: 12,
+    fontSize: 12
   },
   listContainer: {
     width: '80%',
     borderColor: '#DDD',
     borderWidth: 1,
     borderRadius: 4,
-    marginBottom: 10,
+    marginBottom: 10
   },
   listItem: {
-    width: '47%',
-    margin: 5,
-    alignItems: 'center',
-    paddingVertical: 8,
+    flex: 1,
+    width: '100%',
+    marginBottom: 16,
+    alignItems: 'center'
   },
   listItemText: {
     textAlign: 'center',
     marginBottom: 4,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
   description: {
     fontSize: 12,
     textAlign: 'center',
     color: '#666',
-    marginTop: 2,
+    marginTop: 2
   },
   footer: {
     borderColor: '#DDD',
@@ -260,9 +263,14 @@ const styles = StyleSheet.create({
   },
   socialIcons: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    width: '10%',
+    alignItems: 'center',
+    gap: 12,
     marginTop: 8,
     marginBottom: 16
   },
+  image: {
+  width: '100%',
+  height: 220,
+  borderRadius: 6
+  }
 });
